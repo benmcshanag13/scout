@@ -5,7 +5,8 @@ buildscript {
         compileSdkVersion = 35
         targetSdkVersion = 35
         ndkVersion = "26.1.10909125"
-        kotlinVersion = "1.9.24"
+        kotlinVersion = "2.0.21"
+        androidGradlePluginVersion = "8.6.1"
 
         // Ensure React Native modules can access these versions
         // (react-native-gesture-handler uses safeExtGet to read these)
@@ -28,7 +29,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath("com.android.tools.build:gradle")
+        classpath("com.android.tools.build:gradle:$androidGradlePluginVersion")
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
     }
