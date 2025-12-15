@@ -35,9 +35,10 @@ class MainApplication : Application(), ReactApplication {
   override fun onCreate() {
     super.onCreate()
     SoLoader.init(this, false)
-    if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {
-      // If you opted-in for the New Architecture, we load the native entry point for this app.
-      load()
-    }
+    // Commented out due to missing libreact_featureflagsjni.so in RN 0.76.6
+    // if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {
+    //   // If you opted-in for the New Architecture, we load the native entry point for this app.
+    //   load()
+    // }
   }
 }
