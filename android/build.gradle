@@ -1,11 +1,17 @@
 buildscript {
     ext {
-        buildToolsVersion = "34.0.0"
-        minSdkVersion = 21
-        compileSdkVersion = 34
-        targetSdkVersion = 34
-        ndkVersion = "25.1.8937393"
-        kotlinVersion = "1.8.0"
+        buildToolsVersion = "35.0.0"
+        minSdkVersion = 24
+        compileSdkVersion = 35
+        targetSdkVersion = 35
+        ndkVersion = "26.1.10909125"
+        kotlinVersion = "1.9.24"
+
+        // Ensure React Native modules can access these versions
+        // (react-native-gesture-handler uses safeExtGet to read these)
+        compileSdk = 35
+        targetSdk = 35
+        minSdk = 24
     }
     repositories {
         google()
@@ -22,10 +28,28 @@ buildscript {
         }
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:8.1.1")
+        classpath("com.android.tools.build:gradle")
         classpath("com.facebook.react:react-native-gradle-plugin")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
     }
 }
 
 apply plugin: "com.facebook.react.rootproject"
+
+allprojects {
+    // Set the React Native node modules directory for all projects
+    // This helps libraries like react-native-gesture-handler find react-native
+    project.ext.set("REACT_NATIVE_NODE_MODULES_DIR", file("$rootDir/../node_modules/react-native"))
+    repositories {
+        maven {
+            url 'https://api.mapbox.com/downloads/v2/releases/maven'
+            authentication {
+                basic(BasicAuthentication)
+            }
+            credentials {
+                username = 'mapbox'
+                password = project.hasProperty('MAPBOX_DOWNLOADS_TOKEN') ? project.property('MAPBOX_DOWNLOADS_TOKEN') : ''
+            }
+        }
+    }
+}
