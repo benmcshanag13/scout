@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Scout</string>
+    <string name="mapbox_access_token" translatable="false">pk.eyJ1IjoiYmVubWNzaGFuYWciLCJhIjoiY21qMmNrbTY0MHZ4OTNkcHowaGFsb3NtdyJ9.x7zBuJDGx3Yt5p2yKH5ykQ</string>
 </resources>

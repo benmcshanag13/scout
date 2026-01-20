@@ -1,18 +1,27 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, ActivityIndicator, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import MapViewComponent from '../components/MapView';
 
 const MapScreen = (): React.JSX.Element => {
+  const [isMapReady, setIsMapReady] = useState(false);
+
+  const handleMapReady = () => {
+    setIsMapReady(true);
+  };
+
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>Map</Text>
-        <Text style={styles.subtitle}>
-          Mapbox integration coming soon...
-        </Text>
-        <Text style={styles.info}>
-          This screen will display a map with real-time inspector locations
-        </Text>
+    <SafeAreaView style={styles.container} edges={['top']}>
+      <View style={styles.mapContainer}>
+        <MapViewComponent onMapReady={handleMapReady} />
+
+        {/* Loading indicator while map initializes */}
+        {!isMapReady && (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#4A90E2" />
+            <Text style={styles.loadingText}>Loading map...</Text>
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -23,27 +32,25 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000',
   },
-  content: {
+  mapContainer: {
     flex: 1,
+    position: 'relative',
+  },
+  loadingContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: '#000',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    zIndex: 10,
   },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 10,
-  },
-  subtitle: {
+  loadingText: {
+    marginTop: 16,
     fontSize: 16,
     color: '#888',
-    marginBottom: 20,
-  },
-  info: {
-    fontSize: 14,
-    color: '#666',
-    textAlign: 'center',
   },
 });
 
